@@ -1,0 +1,33 @@
+{
+    "engines": {
+        "node": ">=16",
+        "pnpm": ">=7"
+    },
+    "scripts": {
+        "nuke": "shx rm -rf node_modules pnpm-lock.yaml packages/*/*/node_modules packages/*/*/pnpm-lock.yaml || true",
+        "reinstall": "pnpm nuke && pnpm install",
+        "clean": "pnpm --recursive run clean && shx rm -rf **/*.tsbuildinfo",
+        "build": "pnpm run build:ts && pnpm run build:other",
+        "build:ts": "tsc --build --verbose",
+        "build:other": "pnpm --recursive run build",
+        "package": "pnpm --recursive run package",
+        "release": "pnpm run clean && pnpm run build:ts && pnpm run package && pnpm run build:other",
+        "watch": "tsc --build --verbose --watch",
+        "fmt": "prettier --write '{*,**/*}.{ts,tsx,js,jsx,json}'",
+        "lint": "prettier --check '{*,**/*}.{ts,tsx,js,jsx,json}' && eslint .",
+        "lint:fix": "pnpm run fmt && eslint --fix ."
+    },
+    "devDependencies": {
+        "@types/node": "^18.6.4",
+        "@typescript-eslint/eslint-plugin": "^5.32.0",
+        "@typescript-eslint/parser": "^5.32.0",
+        "eslint": "^8.20.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-require-extensions": "^0.1.1",
+        "pnpm": "^7.8.0",
+        "prettier": "^2.7.1",
+        "shx": "^0.3.4",
+        "typescript": "^4.7.4"
+    }
+}
